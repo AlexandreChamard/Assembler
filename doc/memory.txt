@@ -1,0 +1,25 @@
+.DATA	declaration d'une zone mémoire statics
+DB -> 1byte
+DW -> 2bytes
+DD -> 4 bytes
+
+exemple:
+.DATA
+var		DB 64		; Declare 1 byte qui vaut 64.
+var2	DB ?		; Declare 1 byte non initialisé.
+		DB 10		; Declare 1 byte sans label qui vaut 10. Il est a l'addresse var2 + 1.
+X 		DW ?		; Declare 2 bytes non initialisé.
+Y 		DD 30000	; Declare 4 bytes qui vallent 30.000.
+
+hexa:
+[40 ?? 10 ?? ?? 00 00 75 30]
+
+Z 		DD 1, 2, 3 		; Declare 3x 4 bytes qui ont pour valeur 1, 2, et 3. La valeur à Z + 8 = 3.
+bytes	DB 10 DUP(?)	; Declare 10x 1 bytes non initialisé qui commence à la location de bytes.
+arr 	DD 100 DUP(0)   ; Declare 100* 4 bytes, tout est initialisé a 0
+str 	DB 'hello',0	; Declare 6 bytes qui commence à l'addresse str. les bytes initialisés sont 'hello\0'
+
+hexa:
+[01 02 03 ?? 10* ?? 00 100* 00 68 65 6C 6C 6F 00]
+ascii:
+[                              h  e  l  l  o    ]
