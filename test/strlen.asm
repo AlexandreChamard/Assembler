@@ -7,8 +7,7 @@ section .text
 	global _start
 
 _start:
-	mov eax, 0
-	push eax
+	push 0
 l1:
 	mov ebx, ptr
 	add ebx, [esp]
@@ -20,11 +19,11 @@ l1:
 
 l2:
 	add dword [esp], '0'
-	mov eax, 4			;eax serve here for storing the number of the syscall (here, write)
-	mov ebx, 1			;fd (stdout)
+	mov eax, 4
+	mov ebx, 1
 	mov ecx, esp
-	mov edx, 4			;len of stars to write
-	int 0x80							;syscall
+	mov edx, 4
+	int 0x80
 
 nullptr:
 
