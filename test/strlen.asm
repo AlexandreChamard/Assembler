@@ -6,28 +6,32 @@ section .data
 section .text
 	global _start
 
-_start:
-	push 0
+strlen:
+	push ebp     ; Save the old base pointer value.
+	mov ebp, esp ; Set the new base pointer value.
+	push ecx
+	push edx
+	push edi     ; Save the values of registers that the function
+	push esi     ; will modify. This function uses EDI and ESI.
+
+	mov edx, ebp	; ebx va start
+	add edx, 7	; ebx va au ptr
+	mov ecx, 0	; i = 0
 l1:
-	mov ebx, ptr
-	add ebx, [esp]
+	inc edx		; avance de i dans la str
 	mov al, [ebx]
 	cmp byte al, 0
 	je l2
-	inc dword [esp]
+	inc ecx
 	jmp l1
 
 l2:
-	add dword [esp], '0'
-	mov eax, 4
-	mov ebx, 1
-	mov ecx, esp
-	mov edx, 4
-	int 0x80
+	add ebp, 4	;va au return
+	mov ebp, ecx	;return i
 
-nullptr:
-
-; *** END ***
-	mov eax, 1
-	mov ebx, 0
-	int 0x80
+	pop esi
+	pop edi
+	pop edx
+	pop ecx
+	pop ebp
+	ret

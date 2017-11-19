@@ -11,4 +11,4 @@ if [ "$2" ];then
 	debug="valgrind"
 fi
 
-nasm -f elf $1 && ld -m elf_i386 $obj -o a.out && $debug ./a.out ; rm -f a.out
+nasm -f elf $1 && ld -m elf_i386 $obj -o a.out && $debug ./a.out ; rm -f a.out $obj
