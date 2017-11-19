@@ -1,0 +1,2 @@
+nasm -f elf truc.asm
+ld -m elf_i386 truc.o -o truc
