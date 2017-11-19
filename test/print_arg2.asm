@@ -6,19 +6,19 @@ section .text
 
 _start:
 	mov ebp, esp			; set le ebp sur 0
-	mov ecx, 1			; ecx == iteration des av
+	mov ecx, 0			; ecx == iteration des av
 
 loop_arg:
 	push ecx			; push iteration des av
 
-	push dword [ebp + 4 * ecx]	; push av[ecx]
+	push dword [ebp + 4 * (ecx + 1)]	; push av[ecx]
 	sub esp, 4			; addresse de return
 	call _strlen			;will put len at [esp], and the string at [esp - 4]
 
 
 	mov eax, 4
 	mov ebx, 1
-	mov ecx, [ebp + 4 * ecx]	; addresse av[ecx]
+	mov ecx, [ebp + 4 * (ecx + 1)]	; addresse av[ecx]
 	pop edx				; pop le return de _strlen
 	int 0x80
 
@@ -31,10 +31,10 @@ loop_arg:
 	add esp, 4		; remove le ptr de av[ecx]
 	pop ecx			; recupere l'ancien ecx soit l'iteration des av
 
-	cmp ecx, [ebp]		; si ecx == ac
-	je end
 	inc ecx
-	jmp loop_arg
+	cmp ecx, [ebp]		; si ecx == ac
+	jne loop_arg
+
 end:
 	mov eax, 1
 	mov ebx, 0
