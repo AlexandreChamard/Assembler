@@ -61,12 +61,11 @@ _strlen:
 l1:
 	mov edx, [ebp + 12]	; av[0]
 	add edx, ecx		; av[0] + i
-	cmp byte [edx], 0	; av[0][i] == 0
-	je l2
 	inc ecx
-	jmp l1
+	cmp byte [edx], 0	; av[0][i] != 0
+	jne l1
+	dec ecx
 
-l2:
 	mov [ebp + 8], ecx	;return i
 
 	pop esi

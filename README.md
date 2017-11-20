@@ -1,7 +1,5 @@
-pour test une fonction:
+pour compiler:
 
-	./exec.sh nomDuFichier [debug]
+	./compile [-o binaryName] nomDuFichier1 nomDuFichier2 nomDuFichier3 ...
 
-pour compiler une fonction:
-
-	./compile nomDuFichier
+/!!\ exec.sh est obsolete /!!\
