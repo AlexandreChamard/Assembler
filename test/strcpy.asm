@@ -21,7 +21,7 @@ loop:
         inc esi                 ; 
         inc edi                 ;
         cmp ecx, len1           ; Test if we reached the end of str1
-        jnz print
+        je print
         inc ecx                 ; Increment iterator
         jmp loop
 
@@ -34,7 +34,7 @@ print:
  
         mov eax, 4              ; sys_write
         mov ebx, 1              ; fd = STDOUT
-        mov ecx, str2           ; Write str1
+        mov ecx, str2           ; Write str2
         mov edx, len2           ; Write len bytes
         int 0x80
 
