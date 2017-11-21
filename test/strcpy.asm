@@ -74,4 +74,5 @@ loop_cpy:
 
 return:
         mov eax, [ebp + 8]      ; return *str2
+        pop ebp                 ; Get back ebp
         ret
