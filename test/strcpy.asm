@@ -13,6 +13,7 @@ section .text
 _start:
         push ebp
         mov ebp, esp
+        push str2
         push str1
 
 ; Start of strcpy
@@ -31,17 +32,20 @@ call_strlen:
         call _strlen            ; len2 is ret in eax
         pop edi                 ; Get back str2 pointer
 
-get_min_len:
-        cmp ecx, eax            ; len2 > len1 ?
-        jge len_ge
-        jmp len_l
+if_min_len:
+        cmp ecx, eax            ; ecx = len1 ; eax = len2
+        jge if_len_ge           ; if len1 >= len2
+        jmp if_len_l            ; if len1 < len2
 
-len_ge:
+if_len_ge:
         mov ecx, eax
+        jmp end_if
+if_len_l:
 
-len_l:
-        cmp ecx, 0
-        je print
+end_if:
+
+          cmp ecx, 0
+          jmp end_strcpy        ; if len == 0
 
 loop_cpy:
         mov eax, [esi]          ; Save str1[ecx] into eax
@@ -49,6 +53,8 @@ loop_cpy:
         inc esi                 ; Increment str1 index
         inc edi                 ; Increment str2 index
         loop loop_cpy           ; if (ecx){goto loop_cpy}
+
+end_strcpy:
 ; End of strcpy
 
 print:
@@ -63,7 +69,7 @@ print:
         mov ecx, str2           ; Write str2
         mov edx, len2           ; Write len bytes
         int 0x80
-        
+
 exit:
         pop ebp
         mov eax, 1              ; sys_exit
