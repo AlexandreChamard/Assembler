@@ -41,6 +41,8 @@ _strcpy:
         push ebp
         mov ebp, esp            ; Save esp
         ; Gonna use eax, ecx
+        push esi
+        push edi
         push ecx
         mov esi, [ebp + 8]      ; Save str1 pointer into edi
         mov edi, [ebp + 12]     ; Save str2 pointer into esi
@@ -65,10 +67,8 @@ if_len_ge:
 if_len_l:
 
 end_if:
-
           cmp ecx, 0
           jmp return        ; if len == 0
-
 loop_cpy:
         mov al, [esi]           ; Save str1[ecx] into eax
         mov [edi], al           ; Put eax into str2[ecx]
@@ -80,5 +80,7 @@ return:
         mov eax, [ebp + 8]      ; return *str2
         ; Get back registers
         pop ecx
+        pop edi
+        pop esi
         pop ebp
         ret
