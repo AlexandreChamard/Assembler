@@ -15,10 +15,11 @@ _start:
         mov ebp, esp
         mov esi, str1
         mov edi, str2
-        push str2
-        push str1
+        push esi
+        push edi
         call _strcpy
-        add esp, 8
+        pop edi
+        pop esi
 
 print:
         mov eax, 4              ; sys_write
@@ -42,12 +43,12 @@ exit:
 _strcpy:
         push ebp
         mov ebp, esp            ; Save esp
-        ; Gonna use eax, ecx
+        ; Gonna use eax, ecx, esi, edi
         push esi
         push edi
         push ecx
-        mov esi, [ebp + 8]      ; Save str1 pointer into edi
-        mov edi, [ebp + 12]     ; Save str2 pointer into esi
+        mov esi, [ebp + 12]     ; Save str1 pointer into edi
+        mov edi, [ebp + 8]      ; Save str2 pointer into esi
 
 call_strlen:
         push esi                ; Push str1 pointer on stack for strlen
@@ -62,18 +63,13 @@ if_min_len:
         cmp ecx, eax            ; ecx = len1 ; eax = len2
         jge if_len_ge           ; if len1 >= len2
         jmp if_len_l            ; if len1 < len2
-
 if_len_ge:
         mov ecx, eax
-        jmp end_if
 if_len_l:
 
-end_if:
-          cmp ecx, 0
-          jmp return        ; if len == 0
 loop_cpy:
-        mov al, [esi]           ; Save str1[ecx] into eax
-        mov [edi], al           ; Put eax into str2[ecx]
+        mov al, [esi]           ; Save str1[ecx] into al
+        mov [edi], al           ; Put al into str2[ecx]
         inc esi                 ; Increment str1 index
         inc edi                 ; Increment str2 index
         loop loop_cpy           ; if (ecx){goto loop_cpy}
