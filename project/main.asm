@@ -1,25 +1,36 @@
 section .rodata
-str1 db "Biteeee", 0x0A    ; 0x0A -> '\n'
-len1 equ $ - str1
+src db "source: "
+lensrc equ $ - src
+dest db "dest: "
+lendest equ $ - dest
+next_line db 0x0A
 
 
 section .text
 	global _start
-  extern _putstr
-	extern _putstr_computed
+	extern _strcpy_computed
+	extern _strlen
 
 _start:
+	push ebp
+	mov ebp, esp
 
-	mov ebp, esp			; set le ebp sur 0
-	mov eax, 84
-	cmp dword [ebp], 1
-	je end
-  push len1
-  push str1
-	call _putstr			;will put len at [esp], and the string at [esp - 4]
+	push lendest
+	push dest
+	push dword [ebp + 12]
+	call _strcpy_computed
 
-  xor eax, eax
-end:
-	mov ebx, eax
-	mov eax, 1
+	mov ecx, eax
+	mov ebx, 1
+	push ecx
+	call _strlen
+	pop ecx
+	mov edx, eax
+	mov eax, 4
+	int 0x80
+
+exit:
+	pop ebp
+	mov eax, 1              ; sys_exit
+	xor ebx, ebx            ; return 0
 	int 0x80
