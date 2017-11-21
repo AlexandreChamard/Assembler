@@ -18,20 +18,23 @@ _start:
 _putstr:
         push ebp
         mov ebp, esp
+
+        mov esi, [ebp + 8]
+        cmp esi, 0
+        je return
+
+save_reg:
         ; Gonna use eax, ebx, ecx, edx
         push eax                ; putstr is a void, so no need to lose eax
         push ebx
         push ecx
         push edx
 
-        mov esi, [ebp + 8]
-        cmp esi, 0
-        je return
         push esi                ; Push str
         call _strlen
         pop esi                 ; Get back str
         cmp eax, 0              ; If len == 0
-        je return               ; No need to call sys_write
+        je get_reg              ; No need to call sys_write
         
         mov edx, eax            ; Ret of strlen into 3rd argument of sys_write
         mov eax, 4              ; sys_write
@@ -39,11 +42,12 @@ _putstr:
         mov ecx, esi            ; *str
         int 0x80
 
-return:
+get_reg:
         pop edx
         pop ecx
         pop ebx
         pop eax
 
+return:
         pop ebp
         ret
