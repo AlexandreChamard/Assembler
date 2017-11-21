@@ -6,7 +6,7 @@ section .text
 ; Type:
 ;	void
 ; Args:
-;	ESI = [EBP + 8]: str
+;	ESI = [EBP + 8]: const char *str
 _putstr:
 	push ebp
 	mov ebp, esp
@@ -44,8 +44,8 @@ end_putstr:
 ; Type:
 ;	void
 ; Args;
-;	ECX = [ESP + 20]: str
-;	EDX = [ESP + 24]: len
+;	ECX = [ESP + 20]: const char *str
+;	EDX = [ESP + 24]: int len
 _putstr_computed:
 	push eax
 	push ebx

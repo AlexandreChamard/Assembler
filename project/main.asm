@@ -8,29 +8,28 @@ next_line db 0x0A
 
 section .text
 	global _start
-	extern _strcpy_computed
-	extern _strlen
+	extern _atoi
+	extern _putnbr
 
 _start:
-	push ebp
 	mov ebp, esp
 
-	push lendest
-	push dest
-	push dword [ebp + 12]
-	call _strcpy_computed
+	cmp dword [ebp], 1
+	je exit
 
-	mov ecx, eax
-	mov ebx, 1
-	push ecx
-	call _strlen
-	pop ecx
-	mov edx, eax
-	mov eax, 4
+	push dword [ebp + 8]
+	call _atoi
+
+	mov [esp], eax
+
+	call _putnbr
+	add esp, 4
+
+	mov ebx, eax
+	mov eax, 1
 	int 0x80
 
 exit:
-	pop ebp
 	mov eax, 1              ; sys_exit
 	xor ebx, ebx            ; return 0
 	int 0x80

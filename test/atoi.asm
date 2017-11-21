@@ -1,14 +1,5 @@
 section .text
-    global _start
-
-_start:
-        mov ebp, esp
-        push dword [ebp + 8]
-        call _atoi
-        mov ebx, eax
-        mov eax, 1
-        int 0x80
-
+    global _atoi
 
 _atoi:
         push ebp
@@ -31,9 +22,9 @@ if_not_minus:
 
 loop_nb:
         cmp byte [esi], '0'
-        jl set_return       ; if < '0'
+        jl end_atoi       ; if < '0'
         cmp byte [esi], '9'
-        jg set_return       ; if > '9'
+        jg end_atoi       ; if > '9'
         imul eax, [esp + 4], 10
         add al, [esi]
         sub eax, '0'

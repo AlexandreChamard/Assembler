@@ -4,11 +4,11 @@ section .text
 ; Type:
 ;	int
 ; Args:
-;	ESI = [ESP + 8]:	str
+;	ESI = [ESP + 8]: const char *str
 _strlen:
 	push esi
 
-	; init var
+	; Init var
 	xor eax, eax		; i = 0
 	mov esi, [esp + 8]
 

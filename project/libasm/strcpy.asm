@@ -6,8 +6,8 @@ section .text
 ; Type:
 ;	char *
 ; args:
-;	EDI = [EBP + 8]:	dest
-;	ESI = [EBP + 12]:	src
+;	EDI = [EBP + 8]:  char *dest
+;	ESI = [EBP + 12]: const char *src
 _strcpy:
 	push ebp
 	mov ebp, esp
@@ -42,9 +42,9 @@ end_strcpy:
 ; Type:
 ;	char*
 ; Args;
-;	EDI = [ESP + 16]:	dest
-;	ESI = [ESP + 20]:	src
-;	ECX = [ESP + 24]:	len
+;	EDI = [ESP + 16]: char *dest
+;	ESI = [ESP + 20]: const char *src
+;	ECX = [ESP + 24]: int len
 _strcpy_computed:
 	push esi
 	push edi
