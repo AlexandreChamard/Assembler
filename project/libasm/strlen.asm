@@ -4,13 +4,11 @@ _strlen:
 	push ebp		; Save the old base pointer value.
 	mov ebp, esp		; Set the new base pointer value.
 
-	; use eax, edx, esi
-	push edx
+	; use eax, esi
 	push esi
 
-	; [ebp] = prev ebp
-	; [ebp + 4] = ????
-	; [ebp + 8] = sur av[0]
+	; [ebp]        prev ebp
+	; [ebp + 8]    str
 
 	; init var
 	xor eax, eax		; i = 0
@@ -25,6 +23,5 @@ loop_strlen:
 
 end_strlen:
 	pop esi
-	pop edx
 	pop ebp
 	ret
