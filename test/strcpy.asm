@@ -1,5 +1,5 @@
 section .rodata
-        str1 db "Biteeeee", 0x0A    ; 0x0A -> '\n'
+        str1 db "Biteeee", 0x0A    ; 0x0A -> '\n'
         len1 equ $ - str1
 
 section .data
@@ -15,8 +15,8 @@ _start:
         mov ebp, esp
         mov esi, str1
         mov edi, str2
-        push edi
         push esi
+        push edi
         call _strcpy
         pop esi
         pop edi
@@ -47,8 +47,8 @@ _strcpy:
         push esi
         push edi
         push ecx
-        mov esi, [ebp + 8]      ; Save str1 pointer into edi
-        mov edi, [ebp + 12]     ; Save str2 pointer into esi
+        mov esi, [ebp + 12]     ; Save str1 pointer into esi
+        mov edi, [ebp + 8]      ; Save str2 pointer into edi
 
 call_strlen:
         push esi                ; Push str1 pointer on stack for strlen
