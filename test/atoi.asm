@@ -13,38 +13,38 @@ _start:
 _atoi:
         push ebp
         mov ebp, esp
-        push edi
+        push esi
         sub esp, 8        ; esp = neg ; esp + 4 = nb
 
         ; arg
         ; [ebp + 8] = str
 
-        mov edi, [ebp + 8]
+        mov esi, [ebp + 8]
         mov dword [esp + 4], 0  ; nb = 0
         mov dword [esp], 1      ; neg = 1
 
-        cmp byte [edi], '-'
+        cmp byte [esi], '-'
         jne if_not_minus
         mov dword [esp], -1
-        inc edi
+        inc esi
 if_not_minus:
 
 loop_nb:
-        cmp byte [edi], '0'
+        cmp byte [esi], '0'
         jl set_return       ; if < '0'
-        cmp byte [edi], '9'
+        cmp byte [esi], '9'
         jg set_return       ; if > '9'
         imul eax, [esp + 4], 10
-        add al, [edi]
+        add al, [esi]
         sub eax, '0'
         mov [esp + 4], eax
-        inc edi
+        inc esi
         jmp loop_nb
 end_atoi:
         mov eax, [esp + 4]  ; ret = nb
         imul eax, [esp]     ; ret = nb * neg
         add esp, 8
-        pop edi
+        pop esi
         pop ebp
         ret
 
