@@ -18,8 +18,8 @@ _start:
         push esi
         push edi
         call _strcpy
-        pop esi
         pop edi
+        pop esi
 
 print:
         mov eax, 4              ; sys_write
@@ -78,7 +78,7 @@ return:
         mov eax, [ebp + 8]      ; return *str2
         ; Get back registers
         pop ecx
-        pop edi
+        pop esi
         pop esi
         pop ebp
         ret
