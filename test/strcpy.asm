@@ -13,26 +13,29 @@ section .text
 _start:
         push ebp
         mov ebp, esp
-        push str1
-        push str2
+        ; get str1 and str2 pointers
+        mov esi, str1
+        mov edi, str2
+        push esi
+        push edi
         call _strcpy
+        pop edi
+        pop esi
 
 print:
         mov eax, 4              ; sys_write
         mov ebx, 1              ; fd = STDOUT
-        mov ecx, str1           ; Write str1
+        mov ecx, esi            ; Write str1
         mov edx, len1           ; Write len bytes
         int 0x80
 
         mov eax, 4              ; sys_write
         mov ebx, 1              ; fd = STDOUT
-        mov ecx, str2           ; Write str2
+        mov ecx, edi            ; Write str2
         mov edx, len2           ; Write len bytes
         int 0x80
         
 exit:
-        pop edi
-        pop esi
         pop ebp
         mov eax, 1              ; sys_exit
         xor ebx, ebx            ; return 0
@@ -41,6 +44,8 @@ exit:
 _strcpy:
         push ebp
         mov ebp, esp            ; Save esp
+        ; Gonna use eax, ecx
+        push ecx
         mov esi, [ebp + 12]     ; Save str1 pointer into esi
         mov edi, [ebp + 8]      ; Save str2 pointer into edi
 
@@ -74,5 +79,7 @@ loop_cpy:
 
 return:
         mov eax, [ebp + 8]      ; return *str2
-        pop ebp                 ; Get back ebp
+        ; Get back registers
+        pop ecx
+        pop ebp
         ret
