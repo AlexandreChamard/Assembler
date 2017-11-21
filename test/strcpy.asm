@@ -13,6 +13,8 @@ section .text
 _start:
         push ebp
         mov ebp, esp
+        mov esi, str1
+        mov edi, str2
         push str2
         push str1
         call _strcpy
