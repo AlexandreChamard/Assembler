@@ -1,5 +1,5 @@
 section .rodata
-        str1 db "", 0x0A    ; 0x0A -> '\n'
+        str1 db "Hello world!", 0x0A    ; 0x0A -> '\n'
 
 section .text
         global _start
@@ -25,6 +25,8 @@ _putstr:
         push edx
 
         mov esi, [ebp + 8]
+        cmp esi, 0
+        je return
         push esi                ; Push str
         call _strlen
         pop esi                 ; Get back str
