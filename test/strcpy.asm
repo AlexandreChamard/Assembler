@@ -14,13 +14,35 @@ _start:
         push ebp
         mov ebp, esp
         push str1
+        push str2
+        call _strcpy
 
-; Start of strcpy
+print:
+        mov eax, 4              ; sys_write
+        mov ebx, 1              ; fd = STDOUT
+        mov ecx, str1           ; Write str1
+        mov edx, len1           ; Write len bytes
+        int 0x80
+
+        mov eax, 4              ; sys_write
+        mov ebx, 1              ; fd = STDOUT
+        mov ecx, str2           ; Write str2
+        mov edx, len2           ; Write len bytes
+        int 0x80
+        
+exit:
+        pop edi
+        pop esi
+        pop ebp
+        mov eax, 1              ; sys_exit
+        xor ebx, ebx            ; return 0
+        int 0x80
+
 _strcpy:
         push ebp
         mov ebp, esp            ; Save esp
-        mov esi, [ebp + 8]      ; Save str1 pointer into esi
-        mov edi, [ebp + 12]     ; Save str2 pointer into edi
+        mov esi, [ebp + 12]     ; Save str1 pointer into esi
+        mov edi, [ebp + 8]      ; Save str2 pointer into edi
 
 call_strlen:
         push esi                ; Push str1 pointer on stack for strlen
@@ -44,28 +66,12 @@ len_l:
         je print
 
 loop_cpy:
-        mov eax, [esi]          ; Save str1[ecx] into eax
-        mov [edi], eax          ; Put eax into str2[ecx]
+        mov al, [esi]           ; Save str1[ecx] into eax
+        mov [edi], al           ; Put eax into str2[ecx]
         inc esi                 ; Increment str1 index
         inc edi                 ; Increment str2 index
         loop loop_cpy           ; if (ecx){goto loop_cpy}
-; End of strcpy
 
-print:
-        mov eax, 4              ; sys_write
-        mov ebx, 1              ; fd = STDOUT
-        mov ecx, str1           ; Write str1
-        mov edx, len1           ; Write len bytes
-        int 0x80
-
-        mov eax, 4              ; sys_write
-        mov ebx, 1              ; fd = STDOUT
-        mov ecx, str2           ; Write str2
-        mov edx, len2           ; Write len bytes
-        int 0x80
-        
-exit:
-        pop ebp
-        mov eax, 1              ; sys_exit
-        xor ebx, ebx            ; return 0
-        int 0x80
+return:
+        mov eax, [ebp + 8]      ; return *str2
+        ret
