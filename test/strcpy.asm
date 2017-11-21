@@ -15,11 +15,11 @@ _start:
         mov ebp, esp
         mov esi, str1
         mov edi, str2
-        push esi
         push edi
+        push esi
         call _strcpy
-        pop edi
         pop esi
+        pop edi
 
 print:
         mov eax, 4              ; sys_write
@@ -47,8 +47,8 @@ _strcpy:
         push esi
         push edi
         push ecx
-        mov esi, [ebp + 12]     ; Save str1 pointer into edi
-        mov edi, [ebp + 8]      ; Save str2 pointer into esi
+        mov esi, [ebp + 8]      ; Save str1 pointer into edi
+        mov edi, [ebp + 12]     ; Save str2 pointer into esi
 
 call_strlen:
         push esi                ; Push str1 pointer on stack for strlen
