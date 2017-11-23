@@ -45,12 +45,14 @@ calc_loop:
 
 print_in_loop:
 	push eax
-	mov ecx, edx			; Nb to write
-	add ecx, '0'
+	add edx, '0'			; Convert number to ascii char
+	push edx			; Char to write in [esp]
 	mov eax, 4			; sys_write
 	mov ebx, 1			; STDOUT
+	mov ecx, esp			; Pointer on stack
 	mov edx, 1
 	int 0x80
+	pop edx
 	;;; TO REMOVE
 	push end_line
 	call _putstr
