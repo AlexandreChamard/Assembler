@@ -20,8 +20,7 @@ _putnbr:
 
 	cmp eax, 0
 	jge is_positif		; If nb is positif
-	mov ebx, -1
-	imul eax, ebx
+	neg eax
 
 	; Write '-'
 	push eax

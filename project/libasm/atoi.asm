@@ -19,7 +19,7 @@ _atoi:
 
         cmp byte [esi], '-'
         jne if_not_minus
-        mov dword [esp], -1
+        neg dword [esp]
         inc esi
 if_not_minus:
 
