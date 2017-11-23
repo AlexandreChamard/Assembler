@@ -1,14 +1,16 @@
 section .rodata
-	;;; TO REMOVE
-	msg db "Nb to write : ", 0
-	end_line db 0x0A, 0
-	;;; TO REMOVE
+	base db "0123456789"		; Decimal base
+	base_len equ $ - base		; Len of base
 	ng db "-"               	; Negative symbol
 
 section .text
         global _putnbr
         extern _putstr
 
+; Type:
+;	void
+; Args:
+;	EAX = [EBP + 8]: int nb
 _putnbr:
         push ebp
         mov ebp, esp
@@ -24,55 +26,33 @@ _putnbr:
         push ng
         call _putstr
         pop esi
-	;;; TO REMOVE
-	push end_line
-	call _putstr
-	pop esi
-	;;; TO REMOVE
         neg eax				; Multiply eax by -1
 
 calc_loop:
-	;;; TO REMOVE
-	push msg
-	call _putstr
-	pop esi
-	;;; TO REMOVE
-        cmp eax, 10
+        cmp eax, base_len
         jl end_print
         xor edx, edx
-	mov ecx, 10
+	mov ecx, base_len
 	idiv ecx
 
 print_in_loop:
-	push eax
-	add edx, '0'			; Convert number to ascii char
-	push edx			; Char to write in [esp]
+	push eax			; save remainder for calc_loop
+	mov ecx, base			; Get base string
+	add ecx, edx			; Go to base[nb]
 	mov eax, 4			; sys_write
 	mov ebx, 1			; STDOUT
-	mov ecx, esp			; Pointer on stack
 	mov edx, 1
 	int 0x80
-	pop edx
-	;;; TO REMOVE
-	push end_line
-	call _putstr
-	pop esi
-	;;; TO REMOVE
 	pop eax
 	jmp calc_loop
 
 end_print:
-	mov ecx, eax
-	add ecx, '0'
+	mov ecx, base			; Get base string
+	add ecx, eax			; Go to base[nb]
 	mov eax, 4			; sys_write
 	mov ebx, 1			; STDOUT
-	mov edx, 1
+	mov edx, 1			; 1 char
 	int 0x80
-	;;; TO REMOVE
-	push end_line
-	call _putstr
-	pop esi
-	;;; TO REMOVE
 
 end_putnbr:
 	pop esi
