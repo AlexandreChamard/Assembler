@@ -14,6 +14,7 @@ _putstr:
 	push ebx
 	push ecx
 	push edx
+	push esi
 
 	mov esi, [ebp + 8]
 	cmp esi, 0
@@ -33,6 +34,7 @@ _putstr:
 	int 0x80
 
 end_putstr:
+	pop esi
 	pop edx
 	pop ecx
 	pop ebx
