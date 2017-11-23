@@ -15,8 +15,6 @@ _start:
 push_args:
 	push dword [ebp + 4 * ecx + 4]
 	loop push_args
-	push dword [ebp]
-	dec dword [esp]
   call _printf
 
 end_start:
