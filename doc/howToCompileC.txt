@@ -1,0 +1,62 @@
+mot clé
+if while for do break sizeof continue return
+
+var type: (without typedef)
+bool char short int long float double
+
+operator:
++ - * / % | & ^ || &&
+
+
+fonction qui prend un fd et renvoie une instruction.
+
+instruction:
+
+mot clé - params - block
+if () {}
+while () {}
+for () {}
+
+mot clé - block
+else {}
+
+mot clé
+break;continue;
+
+mot clé - block - mot clé - params
+do {} while ();
+
+mot clé - params - noBlock (exec next instruction)
+if () i++;
+while (i++);
+for (;1;);
+
+type var - name var - = - value
+int i = 0;
+
+name var - = - value
+i = 0;
+
+type var - name var - params - block
+int main () {}
+
+name var - params
+bonjour ();
+
+
+value: peut contenir
+
+block de value
+()
+
+name var
+i
+
+name var - params
+bonjour ();
+
+valeur
+0, 1, ..
+
+operateur
++, -, ...
