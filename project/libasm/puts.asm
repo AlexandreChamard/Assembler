@@ -3,7 +3,7 @@ section .rodata
 
 section .text
 	global _puts
-	extern _strlen
+	        extern _strlen
 
 ; Type:
 ;	void
@@ -34,6 +34,39 @@ _puts:
 	mov ebx, 1
 	mov ecx, esi
 	int 0x80
+        jmp end_puts
+
+; Type:
+;	void
+; Args;
+;	ECX = [ESP + 20]: const char *str
+_perror:
+        push ebp
+        mov ebp, esp
+
+        push eax
+        push ebx
+        push ecx
+        push edx
+        push esi
+
+        mov esi, [ebp + 8]
+        cmp esi, 0
+        je end_puts             ; if !str
+
+        push esi
+        call _strlen
+        pop esi
+        cmp eax, 0
+        je end_pus              ; if len == 0
+
+        mov edx, eax            ; write len characters
+        mov eax, 4              ; sys_call
+        mov ebx, 1
+        mov ecx, esi
+        
+        pop esi
+        jmp end_puts       
 
 end_puts:
 	;write '\n'
