@@ -58,11 +58,11 @@ _perror:
         call _strlen
         pop esi
         cmp eax, 0
-        je end_pus              ; if len == 0
+        je end_puts              ; if len == 0
 
         mov edx, eax            ; write len characters
         mov eax, 4              ; sys_call
-        mov ebx, 1
+        mov ebx, 2              ; STDERR
         mov ecx, esi
         
         pop esi
