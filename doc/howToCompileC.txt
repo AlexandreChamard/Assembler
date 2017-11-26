@@ -1,5 +1,5 @@
 mot clé
-if while for do break sizeof continue return
+if while for do break sizeof continue return typedef
 
 var type: (without typedef)
 bool char short int long float double

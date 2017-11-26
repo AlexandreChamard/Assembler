@@ -1,5 +1,14 @@
 section .text
+	global _trim
 	global _ltrim
+	global _rtrim
+
+; Type:
+;	char *
+; Args:
+;	esi = [EBP + 8]: char *str
+_trim:
+	call _rtrim
 
 ; Type:
 ;	char *
@@ -61,10 +70,8 @@ _rtrim:
 	push ebp
 	mov ebp, esp
 	push esi
-	push edi
 
 	mov esi, [ebp + 8]
-	mov edi, [ebp + 8]
 loop_blank_rtrim:
 	mov al, [esi]
 	cmp al, 0		; '\0'
@@ -72,35 +79,34 @@ loop_blank_rtrim:
 	cmp al, 0x09		; '\n'
 	je end_rtrim
 	cmp al, ' '		; ' '
-	je next_rtrim
+	je loop_blank_rtrim
 	cmp al, 0x09		; '\t'
-	je next_rtrim
+	je loop_blank_rtrim
 
-; Vars:
-;	esi: source
-;	edi: dest
-do_it_rtrim:
+loop_word_rtrim:
 	mov al, [esi]
 	cmp al, 0		; '\0'
-	je end_do_it_rtrim
+	je end_rtrim
 	cmp al, 0x09		; '\n'
-	je end_do_it_rtrim
-	mov [edi], al
-	inc esi
-	inc edi
-	jmp do_it_rtrim
-end_do_it_rtrim:
-	mov [edi], al
-	jmp end_rtrim
+	je end_rtrim
+	cmp al, ' '		; ' '
+	jne loop_word_rtrim
+	cmp al, 0x09		; '\t'
+	jne loop_word_rtrim
 
-next_rtrim:
+	mov byte [esi], 0
+
+next_blank_rtrim:
 	inc esi
 	jmp loop_blank_rtrim
+
+next_word_rtrim:
+	inc esi
+	jmp loop_word_rtrim
 
 
 end_rtrim:
 	mov eax, [ebp + 8]
-	pop edi
 	pop esi
 	pop ebp
 	ret

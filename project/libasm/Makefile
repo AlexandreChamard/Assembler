@@ -13,21 +13,21 @@ SRC		+=	strcpy.asm
 SRC		+=	strlen.asm
 SRC		+=	trim.asm
 
-OBJ		=	$(SRC:.asm=.o)
+OBJDIR		=	objects
 
-OBJDIR		=	objects/
+OBJ		=	$(patsubst %,$(OBJDIR)/%,$(SRC:.asm=.o))
+# OBJ		=	$(OBJDIR)$(SRC:.asm=.o)
+
 
 RM		=	rm -rf
 
-all:		CREATE_DIR CREATE_OBJ
+all:		verif_objdir $(OBJ)
 
-CREATE_DIR:
-		mkdir -p $(OBJDIR)
+verif_objdir:
+		@ if [ ! -d $(OBJDIR) ]; then mkdir $(OBJDIR); fi
 
-CREATE_OBJ:	$(OBJ)
-
-%.o: %.asm
-	$(ASMC) $(ASMFLAGS) $< -o $(OBJDIR)$@
+$(OBJDIR)/%.o: %.asm
+	$(ASMC) $(ASMFLAGS) $< -o $@
 
 clean:
 	$(RM) $(OBJDIR)
