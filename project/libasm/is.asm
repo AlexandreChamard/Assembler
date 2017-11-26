@@ -19,7 +19,7 @@ _isnum:
 
 _isalpha:
 	mov eax, [esp + 4]
-	cmp al '_'
+	cmp al, '_'
 	je return_true		; is '_'
 	cmp al, 'A'
 	jl return_false		; < 'A'
