@@ -1,7 +1,3 @@
-section .rodata
-        blank db 'blank', 0
-        wor db 'word', 0
-
 section .text
 	global _trim
 	global _ltrim
