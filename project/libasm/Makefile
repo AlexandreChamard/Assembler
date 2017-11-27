@@ -2,22 +2,20 @@ ASMC		=	nasm
 
 ASMFLAGS	=	-f elf
 
-SRC		=	atoi.asm
-SRC		+=	cmp.asm
-SRC		+=	is.asm
-SRC		+=	is.asm
-SRC		+=	putchar.asm
-SRC		+=	puts.asm
-SRC		+=	putstr.asm
-SRC		+=	strcpy.asm
-SRC		+=	strlen.asm
-SRC		+=	trim.asm
+SRC		=	atoi.asm	\
+			cmp.asm		\
+			is.asm		\
+			is.asm		\
+			putchar.asm	\
+			puts.asm	\
+			putstr.asm	\
+			strcpy.asm	\
+			strlen.asm	\
+			trim.asm	\
 
 OBJDIR		=	objlib
 
 OBJ		=	$(patsubst %,$(OBJDIR)/%,$(SRC:.asm=.o))
-# OBJ		=	$(OBJDIR)$(SRC:.asm=.o)
-
 
 RM		=	rm -rf
 
@@ -25,11 +23,14 @@ all:		verif_objdir $(OBJ)
 
 verif_objdir:
 		@ if [ ! -d $(OBJDIR) ]; then mkdir $(OBJDIR); fi
+		@ echo -e '\033[1;36m'make LIB'\033[0;97m'
 
 $(OBJDIR)/%.o: %.asm
-		$(ASMC) $(ASMFLAGS) $< -o $@
+		@ echo -e compilation de: '\033[1;92m' $< '\033[0;97m'
+		@ $(ASMC) $(ASMFLAGS) $< -o $@
 
 clean:
-		$(RM) $(OBJDIR)
+		@ echo -e '\033[1;31mremove LIB\033[0;97m'
+		@ $(RM) $(OBJDIR)
 
 fclean:		clean

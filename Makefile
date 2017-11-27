@@ -22,23 +22,29 @@ NAME		=	program
 
 RM		=	rm -rf
 
-all:		verif_objdir make_lib $(OBJ)
+all:		verif_objdir make_lib $(OBJ) end_compile
 
 verif_objdir:
 		@ if [ ! -d $(OBJDIR) ]; then mkdir $(OBJDIR); fi
 
+end_compile:
+		@ echo -e '\033[1;36m'end of Makefile'\033[0;97m'
+
 make_lib:
-		make -C $(LIB)
+		@ make -C $(LIB)
+		@ echo -e '\033[1;36m'make PROJECT'\033[0;97m'
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.asm
-		$(ASMC) $(ASMFLAGS) $< -o $@
-		$(LK) $(LKFLAGS) $(OBJ) $(OBJLIB)/*.o -o $(NAME)
+		@ echo -e compilation de: '\033[1;92m' $< '\033[0;97m'
+		@ $(ASMC) $(ASMFLAGS) $< -o $@
+		@ $(LK) $(LKFLAGS) $(OBJ) $(OBJLIB)/*.o -o $(NAME)
 
 clean:
-		make -C $(LIB) clean
-		$(RM) $(OBJDIR)
+		@ make -C $(LIB) clean
+		@ echo -e '\033[1;31mremove OBJ\033[0;97m'
+		@ $(RM) $(OBJDIR)
 
 fclean:		clean
-		$(RM) $(NAME)
+		@ $(RM) $(NAME)
 
 re:		fclean all
