@@ -11,6 +11,7 @@ section .text
 	extern _strncmp
 	extern _memcmp
 	extern _puts
+	extern _putstr
 	extern _putnbr
 	extern _atoi
 	extern _ltrim
