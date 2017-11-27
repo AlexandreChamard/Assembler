@@ -8,7 +8,7 @@ LKFLAGS		=	-m elf_i386
 
 SRCDIR		=	project
 
-SRC		=	main.asm
+SRC		=	main.asm \
 
 OBJDIR		=	$(SRCDIR)/objsrc
 
@@ -30,7 +30,7 @@ verif_objdir:
 make_lib:
 		make -C $(LIB)
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.asm	
+$(OBJDIR)/%.o: $(SRCDIR)/%.asm
 		$(ASMC) $(ASMFLAGS) $< -o $@
 		$(LK) $(LKFLAGS) $(OBJ) $(OBJLIB)/*.o -o $(NAME)
 

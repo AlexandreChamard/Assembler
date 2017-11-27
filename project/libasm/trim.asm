@@ -1,3 +1,7 @@
+section .rodata
+        blank db 'blank', 0
+        wor db 'word', 0
+
 section .text
 	global _trim
 	global _ltrim
@@ -8,7 +12,10 @@ section .text
 ; Args:
 ;	esi = [EBP + 8]: char *str
 _trim:
+	push dword [esp + 4]
 	call _rtrim
+	add esp, 4
+	; don't need to call ltrim because it's juste below ;)
 
 ; Type:
 ;	char *
@@ -54,7 +61,6 @@ next_ltrim:
 	inc esi
 	jmp loop_blank_ltrim
 
-
 end_ltrim:
 	mov eax, [ebp + 8]
 	pop edi
@@ -79,9 +85,9 @@ loop_blank_rtrim:
 	cmp al, 0x09		; '\n'
 	je end_rtrim
 	cmp al, ' '		; ' '
-	je loop_blank_rtrim
+	je next_blank_rtrim
 	cmp al, 0x09		; '\t'
-	je loop_blank_rtrim
+	je next_blank_rtrim
 
 loop_word_rtrim:
 	mov al, [esi]
@@ -90,22 +96,20 @@ loop_word_rtrim:
 	cmp al, 0x09		; '\n'
 	je end_rtrim
 	cmp al, ' '		; ' '
-	jne loop_word_rtrim
+	je end_rtrim
 	cmp al, 0x09		; '\t'
-	jne loop_word_rtrim
+	je end_rtrim
 
-	mov byte [esi], 0
+	inc esi
+	jmp loop_word_rtrim
 
 next_blank_rtrim:
 	inc esi
 	jmp loop_blank_rtrim
 
-next_word_rtrim:
-	inc esi
-	jmp loop_word_rtrim
-
 
 end_rtrim:
+	mov byte [esi], 0
 	mov eax, [ebp + 8]
 	pop esi
 	pop ebp

@@ -15,7 +15,9 @@ section .text
 	extern _putstr
 	extern _putnbr
 	extern _atoi
-	extern _ltrim
+        extern _ltrim
+	extern _rtrim
+	extern _trim
 
 _start:
 	mov ebp, esp
@@ -23,11 +25,9 @@ _start:
 	jl exit
 
 	push dword [ebp + 8]
-	call _ltrim
-	add esp, 4
-	push eax
-	call _putstr
-	pop eax
+        call _puts
+        call _trim
+        call _puts
 
 exit:
 	mov eax, 1              ; sys_exit
