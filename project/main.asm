@@ -7,6 +7,7 @@ lendest equ $ - dest
 
 section .text
 	global _start
+        extern _putstr
 	extern _strcmp
 	extern _strncmp
 	extern _memcmp

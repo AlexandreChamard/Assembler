@@ -1,0 +1,82 @@
+section .rodata
+	base db "0123456789"		; Decimal base
+	base_len equ $ - base		; Len of base
+	ng db "-"               	; Negative symbol
+
+section .text
+        global _putnbr
+        extern _putstr
+
+; Type:
+;	void
+; Args:
+;	EAX = [EBP + 8]: int nb
+_putnbr:
+        push ebp
+        mov ebp, esp
+	push eax
+	push ebx
+	push ecx
+	push edx
+
+        mov eax, [ebp + 8]		; Get int given by _atoi
+	cmp eax, 0
+        jge calc_loop			; if (nb < 0)
+        push ng
+        call _putstr
+        pop esi
+        neg eax				; Multiply eax by -1
+
+	xor ecx, ecx			; count = 0
+        cmp eax, base_len		; nb < base_len ?
+        jl if_lower
+
+if_lower:
+	push eax			; Add single number to stack
+	inc ecx				; count == 1
+	jmp print
+
+calc_loop:
+        xor edx, edx
+	mov ebx, base_len
+	idiv ebx
+	push eax			; Add remainder to stack
+	inc ecx				; count++
+        cmp eax, base_len		; nb / base_len < base_len ?
+        jge calc_loop
+
+print:
+	add esp, ecx		; Go to start of all pushed numbers
+	mov edx, ecx			; write "count" number
+	mov eax, 4			; sys_write
+	mov ebx, 1			; STDOUT
+	mov ecx, esp			; *char
+	int 0x80
+
+
+;print_in_loop:
+;	push eax			; save remainder for calc_loop
+;	mov ecx, base			; Get base string
+;	add ecx, edx			; Go to base[nb]
+;	mov eax, 4			; sys_write
+;	mov ebx, 1			; STDOUT
+;	mov edx, 1
+;	int 0x80
+;	pop eax
+;	jmp calc_loop
+;
+;end_print:
+;	mov ecx, base			; Get base string
+;	add ecx, eax			; Go to base[nb]
+;	mov eax, 4			; sys_write
+;	mov ebx, 1			; STDOUT
+;	mov edx, 1			; 1 char
+;	int 0x80
+
+end_putnbr:
+	pop edx
+	pop ecx
+	pop ebx
+	pop eax
+	pop ebp
+	ret
