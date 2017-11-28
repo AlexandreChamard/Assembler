@@ -42,7 +42,7 @@ loop_read:				; loop in format
 	je find_code			; If find code
 
 continue_read:				; read next char of format
-	push edi
+	push dword [edi]
 	call _putchar
 	add esp, 4
 	inc edi

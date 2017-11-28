@@ -12,6 +12,7 @@ SRC		=	atoi.asm	\
 			strcpy.asm	\
 			strlen.asm	\
 			trim.asm	\
+			printf.asm	\
 
 ODIR		=	objlib
 
