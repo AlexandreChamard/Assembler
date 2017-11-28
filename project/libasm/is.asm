@@ -1,5 +1,10 @@
 section .text
 	global _isblank
+        global _isnum
+        global _isalpha
+        global _isalphamin
+        global _isalphamaj
+        global _isalphanum
 
 _isblank:
 	mov eax, [esp + 4]
@@ -30,6 +35,22 @@ _isalpha:
 	cmp al, 'Z'
 	jle return_true		; 'A' <= c <= 'Z'
 	jmp return_false	; 'Z' < c < 'a'
+
+_isalphamin:
+        mov eax, [esp + 4]
+        cmp al, 'a'
+        jl return_false
+        cmp al, 'z'
+        jg return_false
+        jmp return_true
+
+_isalphamaj:
+        mov eax, [esp + 4]
+        cmp al, 'A'
+        jl return_false
+        cmp al, 'Z'
+        jg return_false
+        jmp return_true
 
 _isalphanum:
 	call _isnum
