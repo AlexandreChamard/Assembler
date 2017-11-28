@@ -25,9 +25,10 @@ _start:
 	jl exit
 
 	push dword [ebp + 8]
-        call _puts
-        call _trim
-        call _puts
+	call _atoi
+	push eax
+	call _putnbr
+	add esp, 8
 
 exit:
 	mov eax, 1              ; sys_exit
