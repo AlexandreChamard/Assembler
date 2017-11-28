@@ -1,5 +1,6 @@
+petit projet pour ce détendre le cerveau.
+
 pour compiler:
-
-	./compile [-o binaryName] nomDuFichier1 nomDuFichier2 nomDuFichier3 ...
-
-/!!\ exec.sh est obsolete /!!\
+dans le Makefile
+CSRC pour les sources C
+ASMSRC pour les sources ASM
