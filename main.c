@@ -10,20 +10,13 @@ int _printf(char *, ...);
 
 int main(int ac, char **av)
 {
-	char *bonjour = "bonjourrrr";
-	_printf("\n", bonjour);
+	_printf("%d\n", ac);
+	_printf("%s\n", av[0]);
+	_printf("%s\n", av[2]);
+	// char *bonjour = "bonjourrrr";
+	// _printf("\n%c%s\n", 'a', av[0]);
 	// char c = 'a';
 	// _putchar(c);
 	// _printf("%s\n", _ltrim(bonjour));
-}
-
-void _start() {
-
-    /* main body of program: call main(), etc */
-	main(0, (void*)0);
-    /* exit system call */
-    asm("movl $1,%eax;"
-        "xorl %ebx,%ebx;"
-        "int  $0x80"
-    );
+	return (0);
 }
