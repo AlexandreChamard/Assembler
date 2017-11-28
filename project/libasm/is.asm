@@ -2,8 +2,8 @@ section .text
 	global _isblank
         global _isnum
         global _isalpha
-        global _isalphamin
-        global _isalphamaj
+        global _islower
+        global _isupper
         global _isalphanum
 
 _isblank:
@@ -36,7 +36,7 @@ _isalpha:
 	jle return_true		; 'A' <= c <= 'Z'
 	jmp return_false	; 'Z' < c < 'a'
 
-_isalphamin:
+_islower:
         mov eax, [esp + 4]
         cmp al, 'a'
         jl return_false
@@ -44,7 +44,7 @@ _isalphamin:
         jg return_false
         jmp return_true
 
-_isalphamaj:
+_isupper:
         mov eax, [esp + 4]
         cmp al, 'A'
         jl return_false
