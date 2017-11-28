@@ -5,9 +5,13 @@ section .text
 _start:
 	mov ebp, esp
 
-	mov ecx, [esp]
+	mov ecx, [ebp]
+	cmp ecx, 1
+	je push_av
 	dec ecx
+
 push_av:
+	push dword [ebp + 4]
 	push ebp
 	add dword [esp], 4
 	loop push_av

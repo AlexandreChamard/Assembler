@@ -1,22 +1,21 @@
-ASMC		=	nasm
-
-ASMFLAGS	=	-f elf
-
-LK		=	ld
-
-LKFLAGS		=	-m elf_i386
+include ./depend.mk
 
 SRCDIR		=	project
 
 SRC		=	main.asm
 
-ODIR		=	$(SRCDIR)/objsrc
+CSRC		=	main.c
 
-OBJ		=	$(patsubst %,$(ODIR)/%,$(SRC:.asm=.o))
+ASMSRC		=
+
+CSRCDIR		=	C
+ASMSRCDIR	=	project
+ODIR		=	obj
+
+OBJ		=	$(patsubst %,$(ODIR)/%,$(ASMSRC:.asm=.o)) \
+			$(patsubst %,$(ODIR)/%,$(CSRC:.c=.o))
 
 LIB		=	$(SRCDIR)/libasm
-
-OLIB		=	$(LIB)/objlib/*.o
 
 NAME		=	program
 
@@ -24,30 +23,34 @@ RM		=	rm -rf
 
 all		:	$(NAME)
 
-$(NAME)		:	verif_odir make_lib $(OBJ) end_compile
-			@ $(LK) $(LKFLAGS) $(OBJ) $(OLIB) -o $(NAME)
+$(NAME)		:	verif_odir make_lib $(OBJ)
+			@ echo -ne $(CYAN)'compilation de '$(NAME)'...'$(WHITE)
+			@ $(LK) $(LKFLAGS) $(OBJ) -o $(NAME) -l$(LIBNAME) -L$(LIBDIR)
+			@ echo -e $(YELLOW)' SUCCESS'$(WHITE)
 
 
 verif_odir	:
 			@ if [ ! -d $(ODIR) ]; then mkdir $(ODIR); fi
 
-end_compile	:
-			@ echo -e '\033[1;36m'end of Makefile'\033[0;97m'
-
 make_lib	:
 			@ make -C $(LIB)
-			@ echo -e '\033[1;36m'make PROJECT'\033[0;97m'
 
-$(ODIR)/%.o	:	$(SRCDIR)/%.asm
-			@ echo -e compilation de: '\033[1;92m' $< '\033[0;97m'
-			@ $(ASMC) $(ASMFLAGS) $< -o $@
+$(ODIR)/%.o	:	$(CSRCDIR)/%.c
+			@ echo -e 'compilation de: ' $(GREEN)$(notdir $<)$(WHITE)
+			@ $(CC) $(CFLAGS) $< -o $(patsubst %,$(ODIR)/%,$(notdir $@))
+
+$(ODIR)/%.o	:	$(ASMSRCDIR)/%.asm
+			@ echo -e 'compilation de: ' $(GREEN)$(notdir $<)$(WHITE)
+			@ $(ASMC) $(ASMFLAGS) $< -o $(patsubst %,$(ODIR)/%,$(notdir $@))
 
 clean		:
+			@ echo -e $(RED)'remove OBJS'$(WHITE)
+			@ $(RMDIR) $(ODIR)
 			@ make -C $(LIB) clean
-			@ echo -e '\033[1;31mremove OBJ\033[0;97m'
-			@ $(RM) $(ODIR)
 
 fclean		:	clean
+			@ echo -e $(RED)'remove '$(NAME)$(WHITE)
 			@ $(RM) $(NAME)
+			@ make -C $(LIB) fclean
 
 re		:	fclean all

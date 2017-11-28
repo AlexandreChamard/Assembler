@@ -1,24 +1,13 @@
 include		./depend.mk
 
-SRC		=	atoi.asm		\
-			cmp.asm			\
-			is.asm			\
-			putchar.asm		\
-			putnbr.asm		\
-			puts.asm		\
-			putstr.asm		\
-			strcpy.asm		\
-			strlen.asm		\
-			trim.asm		\
-			printf.asm		\
-			call_main.asm		\
+SRC		=
 
 SRCDIR		=	src
 ODIR		=	obj
 
 OBJ		=	$(patsubst %,$(ODIR)/%,$(SRC:.asm=.o))
 
-NAME		=	libasm.a
+NAME		=	libasm64.a
 
 all		:	verif_odir $(NAME)
 
@@ -36,7 +25,7 @@ $(ODIR)/%.o	:	$(SRCDIR)/%.asm
 			@ $(ASMC) $(ASMFLAGS) $< -o $(patsubst %,$(ODIR)/%,$(notdir $@))
 
 clean		:
-			@ echo -e $(RED)'remove LIBs OBJS'$(WHITE)
+			@ if [ -d $(ODIR) ]; then echo -e $(RED)'remove LIBs OBJS'$(WHITE); fi
 			@ $(RMDIR) $(ODIR)
 
 fclean		:	clean
