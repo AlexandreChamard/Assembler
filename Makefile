@@ -10,16 +10,11 @@ ASMSRC		=
 
 CSRCDIR		=	C
 ASMSRCDIR	=	project
-ODIR		=	obj
 
 OBJ		=	$(patsubst %,$(ODIR)/%,$(ASMSRC:.asm=.o)) \
 			$(patsubst %,$(ODIR)/%,$(CSRC:.c=.o))
 
-LIB		=	$(SRCDIR)/libasm
-
 NAME		=	program
-
-RM		=	rm -rf
 
 all		:	$(NAME)
 
@@ -33,7 +28,7 @@ verif_odir	:
 			@ if [ ! -d $(ODIR) ]; then mkdir $(ODIR); fi
 
 make_lib	:
-			@ make -C $(LIB)
+			@ make -C $(LIBDIR)
 
 $(ODIR)/%.o	:	$(CSRCDIR)/%.c
 			@ echo -e 'compilation de: ' $(GREEN)$(notdir $<)$(WHITE)
@@ -46,11 +41,11 @@ $(ODIR)/%.o	:	$(ASMSRCDIR)/%.asm
 clean		:
 			@ echo -e $(RED)'remove OBJS'$(WHITE)
 			@ $(RMDIR) $(ODIR)
-			@ make -C $(LIB) clean
+			@ make -C $(LIBDIR) clean
 
 fclean		:	clean
 			@ echo -e $(RED)'remove '$(NAME)$(WHITE)
 			@ $(RM) $(NAME)
-			@ make -C $(LIB) fclean
+			@ make -C $(LIBDIR) fclean
 
 re		:	fclean all
