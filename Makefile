@@ -2,8 +2,6 @@ include ./depend.mk
 
 SRCDIR		=	project
 
-SRC		=	main.asm
-
 CSRC		=	main.c
 
 ASMSRC		=

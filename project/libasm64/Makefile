@@ -1,6 +1,7 @@
 include		./depend.mk
 
-SRC		=
+SRC		=	start.asm		\
+			strlen.asm
 
 OBJ		=	$(patsubst %,$(ODIR)/%,$(SRC:.asm=.o))
 

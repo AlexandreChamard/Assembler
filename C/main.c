@@ -2,10 +2,9 @@
 
 int main(int ac, char **av)
 {
-	_printf("%d\n", ac);
+	_printf("ac: %d\n", ac);
 	for (int i = 0; i < ac; i++) {
-		_trim(av[i]);
-		_printf("%s\n", av[i]);
+		_printf("av[%d]: %s\n", i, av[i]);
 	}
-	return (0);
+	return (ac);
 }
