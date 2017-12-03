@@ -1,0 +1,42 @@
+0000000000400526 <main>:
+  400526:	55                   	push   rbp				push rbp
+  400527:	48 89 e5             	mov    rbp,rsp				set rbp
+  40052a:	48 83 ec 20          	sub    rsp,0x20				alloue 4registres (4*8)
+  40052e:	89 7d ec             	mov    DWORD PTR [rbp-0x14],edi
+  400531:	48 89 75 e0          	mov    QWORD PTR [rbp-0x20],rsi
+  400535:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]		eax = [edi]
+  400538:	89 c6                	mov    esi,eax				esi = eax = [edi]
+  40053a:	bf 14 06 40 00       	mov    edi,0x400614			edi = format1
+  40053f:	b8 00 00 00 00       	mov    eax,0x0				eax = 0
+  400544:	e8 b7 fe ff ff       	call   400400 <printf@plt>		call printf
+  400549:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0		i = 0 ?
+  400550:	eb 2f                	jmp    400581 <main+0x5b>		-------------------|
+  400552:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]		eax = i  <------|  |
+  400555:	48 98                	cdqe							|  |
+  400557:	48 8d 14 c5 00 00 00 	lea    rdx,[rax*8+0x0]			rdx = 8i	|  |
+  40055e:	00										|  |
+  40055f:	48 8b 45 e0          	mov    rax,QWORD PTR [rbp-0x20]		rax=rsi(rsi=av)	|  |
+  400563:	48 01 d0             	add    rax,rdx				rax = av + i	|  |
+  400566:	48 8b 10             	mov    rdx,QWORD PTR [rax]		rdx = av[i]	|  |
+  400569:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]		eax = i		|  |
+  40056c:	89 c6                	mov    esi,eax				esi = eax = i	|  |
+  40056e:	bf 1c 06 40 00       	mov    edi,0x40061c			edi = format	|  |
+  400573:	b8 00 00 00 00       	mov    eax,0x0				eax = 0		|  |
+  400578:	e8 83 fe ff ff       	call   400400 <printf@plt>		call printf	|  |
+  40057d:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1		i=i+1 (not i++)	|  |
+  400581:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]		eax = i  <---------|
+  400584:	3b 45 ec             	cmp    eax,DWORD PTR [rbp-0x14]				|
+  400587:	7c c9                	jl     400552 <main+0x2c>		if i < ac ------|
+  400589:	8b 45 ec             	mov    eax,DWORD PTR [rbp-0x14]		eax = ac
+  40058c:	c9                   	leave
+  40058d:	c3                   	ret
+  40058e:	66 90                	xchg   ax,ax
+
+so:
+edi = arg1
+esi = arg2
+rdx = arg3
+rcx = arg4
+r8  = arg5
+r9  = arg6
+ensuite il prend dans la stack par block de 4 registres.

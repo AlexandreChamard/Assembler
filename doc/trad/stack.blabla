@@ -1,0 +1,25 @@
+
+
+esp	ebp	eax	ebx	ecx	stack
+0				&ac
+0
+4				&ac	[&ret]
+8				&ac	[&ret	ebp]
+8	8			&ac	[&ret	ebp]
+12	8			&ac	[&ret	ebp	ebx]
+16	8			&ac	[&ret	ebp	ebx	&ac]
+32	8			&ac	[&ret	ebp	ebx	&ac				]
+32	8		&ac	&ac	[&ret	ebp	ebx	&ac				]
+40	8		&ac	&ac	[&ret	ebp	ebx	&ac						]
+44	8		&ac	&ac	[&ret	ebp	ebx	&ac						ac]
+48	8		&ac	&ac	[&ret	ebp	ebx	&ac						ac	&ac%d]
+
+32	8		&ac	&ac	[&ret	ebp	ebx	&ac				]
+32	8		&ac	&ac	[&ret	ebp	ebx	&ac	0			]
+loop main+58
+
+18	10	8	0	8	10	18	20
+av	ac	ret	rbp	.	.	.	.
+
+18	10	8	0	8	10	18	20
+av	ac	ret	rbp	..0	..edi	.	rsi
