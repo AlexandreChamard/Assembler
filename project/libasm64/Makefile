@@ -1,7 +1,10 @@
 include		./depend.mk
 
 SRC		=	start.asm		\
-			strlen.asm
+			strlen.asm		\
+			putstr.asm		\
+			atoi.asm		\
+			putnbr.asm		\
 
 OBJ		=	$(patsubst %,$(ODIR)/%,$(SRC:.asm=.o))
 

@@ -1,5 +1,3 @@
-#include "include/libasm.h"
-
 int my_atoi(char *str)
 {
 	int nb = 0;
@@ -14,10 +12,4 @@ int my_atoi(char *str)
 		str++;
 	}
 	return (nb * neg);
-}
-
-int main(int ac, char **av)
-{
-	printf("%d\n", atoi(av[1]));
-	return (0);
 }

@@ -16,7 +16,7 @@ SRCDIR		=	src
 ODIR		=	obj
 
 # 32bits or 64bits
-MODE		=	32
+MODE		=	64
 
 ifeq ($(MODE), 32)
  CFLAGS		=	-m32

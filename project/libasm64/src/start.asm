@@ -3,26 +3,11 @@ section .text
 	extern main
 
 _start:
-	; push qword [rsp + 8]
-	; mov rax, 60
-	; mov rdi, 1
-	; mov rdx, 20
-	; syscall
-	; push rsp
-	; add qword [rsp], 8
-	push rsp
+	xor ebp, ebp
+	and rsp, 0xfffffffffffffff0
+	mov edi, [rsp]
+	lea rsi, [rsp + 8]
 	call main
-	mov rdi, rdx
+	mov rdi, rax
 	mov rax, 60
-	; mov rdi, 42
 	syscall
-
-
-
-	; printf av[0]
-	; push qword [rsp + 8]
-	; mov rax, 1
-	; mov rdi, 1
-	; mov rsi, [rsp]
-	; mov rdx, 20
-	; syscall

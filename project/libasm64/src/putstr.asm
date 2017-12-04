@@ -6,63 +6,32 @@ section .text
 ; Type:
 ;	void
 ; Args:
-;	ESI = [EBP + 8]: const char *str
+;	RDI: const char *str
 _putstr:
-	push ebp
-	mov ebp, esp
-	push eax
-	push ebx
-	push ecx
-	push edx
-	push esi
-
-	mov esi, [ebp + 8]
-	cmp esi, 0
-	je end_putstr		; If !str
-
-	push esi
-	call _strlen		; EAX = len of ESI
-	pop esi
-	cmp eax, 0
-	je end_putstr		; If len == 0 ; No need to call write
-
-	; Write str sizeof len
+	push rbp
+	mov rbp, rsp
+	call _strlen
+	xor rdx, rdx
 	mov edx, eax
-	mov eax, 4
-	mov ebx, 1
-	mov ecx, esi
-	int 0x80
-
-end_putstr:
-	pop esi
-	pop edx
-	pop ecx
-	pop ebx
-	pop eax
-
-	pop ebp
+	mov qword rsi, rdi
+	mov rdi, 1
+	mov rax, 1
+	syscall
+	leave
 	ret
 
 ; Type:
 ;	void
-; Args;
-;	ECX = [ESP + 20]: const char *str
-;	EDX = [ESP + 24]: int len
+; Args:
+;	RDI: const char *str
+;	ESI: int
 _putstr_computed:
-	push eax
-	push ebx
-	push ecx
-	push edx
-
-	; Write str sizeof len
-	mov eax, 4
-	mov ebx, 1
-	mov ecx, [esp + 20]
-	mov edx, [esp + 24]
-	int 0x80
-
-	pop edx
-	pop ecx
-	pop ebx
-	pop eax
+	push rbp
+	mov rbp, rsp
+	mov edx, esi
+	mov qword rsi, rdi
+	mov rdi, 1
+	mov rax, 1
+	syscall
+	leave
 	ret

@@ -1,0 +1,80 @@
+int my_atoi(char *str)
+{
+	int nb = 0;
+	int neg = 1;
+
+	if (*str == '-') {
+		neg = -1;
+		str++;
+	}
+	while (*str >= '0' && *str <= '9') {
+		nb = nb * 10 + *str - '0';
+		str++;
+	}
+	return (nb * neg);
+}
+
+0000000000000000 <atoi>:
+   0:	55                   	push   rbp
+   1:	48 89 e5             	mov    rbp,rsp
+   4:	48 89 7d e8          	mov    QWORD PTR [rbp-0x18],rdi
+   8:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0
+   f:	c7 45 fc 01 00 00 00 	mov    DWORD PTR [rbp-0x4],0x1
+  16:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  1a:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  1d:	3c 2d                	cmp    al,0x2d
+  1f:	75 33                	jne    54 <atoi+0x54>
+  21:	c7 45 fc ff ff ff ff 	mov    DWORD PTR [rbp-0x4],0xffffffff
+  28:	48 83 45 e8 01       	add    QWORD PTR [rbp-0x18],0x1
+  2d:	eb 25                	jmp    54 <atoi+0x54>
+  2f:	8b 55 f8             	mov    edx,DWORD PTR [rbp-0x8]
+  32:	89 d0                	mov    eax,edx
+  34:	c1 e0 02             	shl    eax,0x2
+  37:	01 d0                	add    eax,edx
+  39:	01 c0                	add    eax,eax
+  3b:	89 c2                	mov    edx,eax
+  3d:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  41:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  44:	0f be c0             	movsx  eax,al
+  47:	01 d0                	add    eax,edx
+  49:	83 e8 30             	sub    eax,0x30
+  4c:	89 45 f8             	mov    DWORD PTR [rbp-0x8],eax
+  4f:	48 83 45 e8 01       	add    QWORD PTR [rbp-0x18],0x1
+  54:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  58:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  5b:	3c 2f                	cmp    al,0x2f
+  5d:	7e 0b                	jle    6a <atoi+0x6a>
+  5f:	48 8b 45 e8          	mov    rax,QWORD PTR [rbp-0x18]
+  63:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+  66:	3c 39                	cmp    al,0x39
+  68:	7e c5                	jle    2f <atoi+0x2f>
+  6a:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+  6d:	0f af 45 fc          	imul   eax,DWORD PTR [rbp-0x4]
+  71:	5d                   	pop    rbp
+  72:	c3                   	ret
+
+  0000000000000000 <atoi>:
+     0:	0f be 17             	movsx  edx,BYTE PTR [rdi]			set dh = 0, dl = *str
+     3:	be 01 00 00 00       	mov    esi,0x1					esi = 1 = neg
+     8:	80 fa 2d             	cmp    dl,0x2d
+     b:	74 33                	je     40 <atoi+0x40>				if *str == '-'	--------|
+     d:	8d 42 d0             	lea    eax,[rdx-0x30]				eax = *str-'0'  <---------------|
+    10:	3c 09                	cmp    al,0x9								|	|
+    12:	b8 00 00 00 00       	mov    eax,0x0					eax = 0			|	|
+    17:	77 36                	ja     4f <atoi+0x4f>				if al > 9		|	|
+    19:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]						|	|
+    20:	8d 0c 80             	lea    ecx,[rax+rax*4]							|	|
+    23:	48 83 c7 01          	add    rdi,0x1								|	|
+    27:	8d 44 4a d0          	lea    eax,[rdx+rcx*2-0x30]						|	|
+    2b:	0f be 17             	movsx  edx,BYTE PTR [rdi]						|	|
+    2e:	8d 4a d0             	lea    ecx,[rdx-0x30]							|	|
+    31:	80 f9 09             	cmp    cl,0x9								|	|
+    34:	76 ea                	jbe    20 <atoi+0x20>							|	|
+    36:	0f af c6             	imul   eax,esi								|	|
+    39:	c3                   	ret									|	|
+    3a:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]			nop word [rax + rax] <--|	|
+    40:	0f be 57 01          	movsx  edx,BYTE PTR [rdi+0x1]			set dh = 0, dl = *(str + 1)	|
+    44:	be ff ff ff ff       	mov    esi,0xffffffff				esi = -1 = neg			|
+    49:	48 83 c7 01          	add    rdi,0x1					str++				|
+    4d:	eb be                	jmp    d <atoi+0xd>					------------------------|
+    4f:	f3 c3                	repz ret
