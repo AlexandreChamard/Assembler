@@ -1,7 +1,6 @@
 #ifndef LIBASM_H_
 #define LIBASM_H_
-
-//typedef unsigned int size_t;
+typedef unsigned int size_t;
 
 int _atoi(const char *);
 
