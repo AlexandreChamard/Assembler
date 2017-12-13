@@ -56,6 +56,45 @@ end_memcmp:
 	pop rbp
 	ret
 
+
+; Type:
+;	bool
+; Args:
+;	RDI = const char *str1
+;	RSI = const char *str2
+_wordcmp:
+	push rbp
+	mov rbp, rsp
+
+        cmp rdi, 0                      ; if !ptr1
+        je null_handling
+        cmp rsi, 0                      ; if !ptr2
+        je null_handling
+
+	xor rax, rax
+
+loop_wordcmp:
+	mov al, [rsi]
+	cmp al, 0
+	je end_true_wordcmp			; If !*str1
+	cmp al, [rdi]
+	jne end_false_wordcmp			; If *str1 != *str2
+	inc rdi
+	inc rsi
+	jmp loop_wordcmp
+
+end_true_wordcmp:
+	mov rax, 1				; Return true
+	jmp end_wordcmp
+
+end_false_wordcmp:
+	mov rax, 0				; Return false
+
+end_wordcmp:
+	pop rbp
+	ret
+
+
 null_handling:
         mov rax, 84                     ; Ahem
         pop rbx

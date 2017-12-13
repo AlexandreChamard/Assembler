@@ -3,7 +3,7 @@
 
 int main(int ac, char **av)
 {
-	if (_memcmp(NULL, av[2], 3))
+	if (_wordcmp(av[1], av[2]))
                 _putstr("KO\n");
         else
                 _putstr("OK\n");
