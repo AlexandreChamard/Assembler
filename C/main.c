@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "include/libasm.h"
 
 int my_atoi(char *str)
@@ -18,6 +19,9 @@ int my_atoi(char *str)
 
 int main(int ac, char **av)
 {
-	printf("%d\n", atoi(av[1]));
+	if (_memcmp(NULL, av[2], 3))
+                _putstr("KO\n");
+        else
+                _putstr("OK\n");
 	return (0);
 }

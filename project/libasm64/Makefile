@@ -5,6 +5,7 @@ SRC		=	start.asm		\
 			putstr.asm		\
 			atoi.asm		\
 			putnbr.asm		\
+			cmp.asm			\
 
 OBJ		=	$(patsubst %,$(ODIR)/%,$(SRC:.asm=.o))
 
