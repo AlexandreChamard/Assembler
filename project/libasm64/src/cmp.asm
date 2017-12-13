@@ -7,6 +7,53 @@ section .text
 ; Type:
 ;	int
 ; Args:
+;	RDI = const char *str1
+;	RSI = const char *str2
+;	RDX = int n
+_strncmp:
+	push rbp
+	mov rbp, rsp
+
+        cmp rdi, 0                      ; if !ptr1
+        je null_handling
+        cmp rsi, 0                      ; if !ptr2
+        je null_handling
+
+	push rbx                        ; save rbx
+
+	mov rcx, rdx                    ; get n into counter
+	xor rax, rax
+	xor rbx, rbx			; set registers to 0 used to calcul result
+
+	dec rcx				; don't show the last char if ending
+	cmp rcx, 0
+	jl end_strncmp			; If n < 0
+	je calcul_result_strncmp	; If n == 0
+
+loop_strncmp:
+	mov al, [rdi]
+	cmp al, [rsi]
+	jne calcul_result_strncmp	; If *str1 != *str2
+	cmp al, 0
+	je calcul_result_strncmp	; If !*str1
+	inc rdi
+	inc rsi
+	loop loop_strncmp
+
+calcul_result_strncmp:
+	mov al, [rdi]
+	mov bl, [rsi]
+	sub rax, rbx			; EAX = *str1 - *str2
+
+end_strncmp:
+	pop rbx
+	pop rbp
+	ret
+
+
+; Type:
+;	int
+; Args:
 ;	RDI = const void *ptr1
 ;	RSI = const void *ptr2
 ;	RDX = int n
