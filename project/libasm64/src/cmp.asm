@@ -9,17 +9,57 @@ section .text
 ; Args:
 ;	RDI = const char *str1
 ;	RSI = const char *str2
-;	RDX = int n
-_strncmp:
+_strcmp:
 	push rbp
 	mov rbp, rsp
+
+	push rbx                        ; save rbx
 
         cmp rdi, 0                      ; if !ptr1
         je null_handling
         cmp rsi, 0                      ; if !ptr2
         je null_handling
 
+	xor rax, rax
+	xor rbx, rbx			; set registers to 0 used to calcul result
+
+loop_strcmp:
+	mov al, [rdi]
+	cmp al, [rsi]
+	jne end_strcmp			; If *str1 != *str2
+	cmp rax, 0
+	je end_strcmp			; If !*str1
+	inc rdi
+	inc rsi
+	jmp loop_strcmp
+
+end_strcmp:
+	mov al, [rdi]
+	mov bl, [rsi]
+	sub rax, rbx			; RAX = *str1 - *str2
+
+	pop rbx
+	pop rbp
+	ret
+
+
+; Type:
+;	int
+; Args:
+;	RDI = const char *str1
+;	RSI = const char *str2
+;	RDX = int n
+_strncmp:
+	push rbp
+	mov rbp, rsp
+
 	push rbx                        ; save rbx
+
+        cmp rdi, 0                      ; if !ptr1
+        je null_handling
+        cmp rsi, 0                      ; if !ptr2
+        je null_handling
+
 
 	mov rcx, rdx                    ; get n into counter
 	xor rax, rax
@@ -34,7 +74,7 @@ loop_strncmp:
 	mov al, [rdi]
 	cmp al, [rsi]
 	jne calcul_result_strncmp	; If *str1 != *str2
-	cmp al, 0
+	cmp rax, 0
 	je calcul_result_strncmp	; If !*str1
 	inc rdi
 	inc rsi
@@ -43,7 +83,7 @@ loop_strncmp:
 calcul_result_strncmp:
 	mov al, [rdi]
 	mov bl, [rsi]
-	sub rax, rbx			; EAX = *str1 - *str2
+	sub rax, rbx			; RAX = *str1 - *str2
 
 end_strncmp:
 	pop rbx
@@ -123,19 +163,19 @@ _wordcmp:
 loop_wordcmp:
 	mov al, [rsi]
 	cmp al, 0
-	je end_true_wordcmp			; If !*str1
+	je end_true_wordcmp		; If !*str1
 	cmp al, [rdi]
-	jne end_false_wordcmp			; If *str1 != *str2
+	jne end_false_wordcmp		; If *str1 != *str2
 	inc rdi
 	inc rsi
 	jmp loop_wordcmp
 
 end_true_wordcmp:
-	mov rax, 1				; Return true
+	mov rax, 1			; Return true
 	jmp end_wordcmp
 
 end_false_wordcmp:
-	mov rax, 0				; Return false
+	mov rax, 0			; Return false
 
 end_wordcmp:
 	pop rbp
