@@ -2,9 +2,9 @@
 
 int main(int ac, char **av)
 {
-        char test[] = "Hello";
-        _strcpy(test, av[1]);
+        // char *test = "Hello";
+        _strcpy(av[1], av[2]);
         _puts(av[1]);
-        _puts(test);
+        _puts(av[2]);
 	return (0);
 }
