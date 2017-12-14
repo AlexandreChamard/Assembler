@@ -12,12 +12,6 @@ _strcpy:
 	push rbp
 	mov rbp, rsp
 
-        ; if !dest or !src
-        cmp rdi, 0
-        je end_strcpy
-        cmp rsi, 0
-        je end_strcpy
-
 	; Get len to cpy
         push rdi                ; save *dest
         push rsi                ; save *src
@@ -50,12 +44,6 @@ end_strcpy:
 _strncpy:
         push rbp
         mov rbp, rsp
-
-        ; if !dest or !src
-        cmp rdi, 0
-        je end_strncpy
-        cmp rsi, 0
-        je end_strncpy
 
 	mov rcx, rdx 
 
