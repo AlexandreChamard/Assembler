@@ -1,9 +1,7 @@
 section .text
 	global _strcpy
+        global _strncpy
 	extern _strlen
-        ; IN TESTING - TO REMOVE
-        extern _puts
-        ; IN TESTING - TO REMOVE
 
 ; Type:
 ;	char *
@@ -22,15 +20,14 @@ _strcpy:
 
 	; Get len to cpy
         push rdi                ; save *dest
-        mov rsi, rdi            ; call strlen on *src
+        push rsi                ; save *src
+        mov rdi, rsi            ; call strlen on *src that was in rsi
 	call _strlen
+        pop rsi
         pop rdi
 	mov rcx, rax		; RCX = len of rsi
 
 loop_cpy:
-        ; IN TESTING - TO REMOVE
-        call _puts
-        ; IN TESTING - TO REMOVE
 	mov al, [rsi]
 	mov [rdi], al
 	inc rsi
@@ -40,7 +37,9 @@ loop_cpy:
 
 end_strcpy:
 	mov rax, rdi	        ; Return dest
+        pop rbp
 	ret
+
 
 ; Type:
 ;	char*
@@ -48,21 +47,27 @@ end_strcpy:
 ;	RDI = char *dest
 ;	RSI = const char *src
 ;	RDX = int len
-_strcpy_computed:
+_strncpy:
         push rbp
         mov rbp, rsp
 
+        ; if !dest or !src
+        cmp rdi, 0
+        je end_strncpy
+        cmp rsi, 0
+        je end_strncpy
+
 	mov rcx, rdx 
 
-loop_cpy_computed:
+loop_ncpy:
 	mov al, [rsi]
 	mov [rdi], al
 	inc rsi
 	inc rdi
-	loop loop_cpy_computed	; While not end of len
+	loop loop_ncpy	; While not end of len
 	mov byte [rdi], 0	; Set '\0' at end of dest
 
-end_strcpy_computed:
+end_strncpy:
 	mov rax, rdi	        ; Return dest
         pop rbp
 	ret
