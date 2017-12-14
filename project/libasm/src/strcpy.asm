@@ -1,6 +1,6 @@
 section .text
 	global _strcpy
-	global _strcpy_computed
+	global _strncpy
 	extern _strlen
 
 ; Type:
@@ -45,7 +45,7 @@ end_strcpy:
 ;	EDI = [ESP + 16]: char *dest
 ;	ESI = [ESP + 20]: const char *src
 ;	ECX = [ESP + 24]: int len
-_strcpy_computed:
+_strncpy:
 	push esi
 	push edi
 	push ecx
@@ -53,15 +53,15 @@ _strcpy_computed:
 	mov esi, [esp + 20]
 	mov ecx, [esp + 24]
 
-loop_cpy_computed:
+loop_ncpy:
 	mov al, [esi]
 	mov [edi], al
 	inc esi
 	inc edi
-	loop loop_cpy_computed	; While not end of len
+	loop loop_ncpy	; While not end of len
 	mov byte [edi], 0	; Set '\0' at end of dest
 
-end_strcpy_computed:
+end_ncpy:
 	mov eax, [esp + 16]	; Return dest
 	pop ecx
 	pop edi
