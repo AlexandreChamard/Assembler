@@ -2,11 +2,12 @@
 
 int main(int ac, char **av)
 {
-        _puts(av[1]);
-        _puts(av[2]);
-        _puts(NULL);
-        _strncpy(av[2], av[1], 2);
-        _puts(av[1]);
-        _puts(av[2]);
+        char test1[] = "Oui";
+        char test2[] = "Non\0\0\0";
+
+        _puts(test1);
+        _puts(test2);
+        _strcat(test2, test1);
+        _puts(test2);
 	return (0);
 }
