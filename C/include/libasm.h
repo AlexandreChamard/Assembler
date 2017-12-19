@@ -36,6 +36,8 @@ char *_strcat(char *dest, const char *src);
 
 size_t _strlen(const char *str);
 
-void _putstr_computed(char *, int);
+void _putstr_computed(char *str, int len);
+
+void *_malloc(int size);
 
 #endif

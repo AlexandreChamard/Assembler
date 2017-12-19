@@ -10,6 +10,7 @@ SRC		=	start.asm		\
 			strcpy.asm		\
 			is.asm			\
 			strcat.asm		\
+			alloc.asm		\
 
 OBJ		=	$(patsubst %,$(ODIR)/%,$(SRC:.asm=.o))
 

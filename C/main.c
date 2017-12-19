@@ -2,11 +2,14 @@
 
 int main(int ac, char **av)
 {
-        char test1[] = "Oui";
-        char test2[] = "Non\0\0\0";
+        char *new;
+        int len;
 
-        _puts(test1);
-        _puts(test2);
-        _puts(_strcat(test2, test1));
+        _puts(av[1]);
+        len = _strlen(av[1]);
+        new = _malloc(sizeof(char) * (len + 1));
+        _puts(new);
+        new = _strcpy(new, av[1]);
+        _puts(new);
 	return (0);
 }
