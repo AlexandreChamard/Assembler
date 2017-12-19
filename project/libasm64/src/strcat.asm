@@ -4,9 +4,6 @@ section .text
         extern _strlen
         extern _strcpy
         extern _strncpy
-        ; DEBUG
-        extern _puts
-        ; DEBUG
 
 ; Type:
 ;	char *
