@@ -7,7 +7,6 @@ int main(int ac, char **av)
 
         _puts(test1);
         _puts(test2);
-        _strcat(test2, test1);
-        _puts(test2);
+        _puts(_strcat(test2, test1));
 	return (0);
 }

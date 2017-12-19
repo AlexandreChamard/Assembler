@@ -3,6 +3,7 @@ section .text
         global _strcat
         extern _strlen
         extern _strcpy
+        extern _strncpy
         ; DEBUG
         extern _puts
         ; DEBUG
@@ -14,25 +15,15 @@ section .text
 ;	RSI = const char *src
 _strcat:
         push rbp
-        mov rsp, rbp
-
-        ; DEBUG
-        call _puts
-        ; DEBUG
-
-        ; No need to play with rdi/rsi as they are not modified by _strlen and _strcpy
-        call _strlen                    ; _strlen(char *dest)
+        mov rbp, rsp
 
         push rdi                        ; save *dest
-        push rax                        ; save *dest len
-        
-        call _strcpy                    ; _strcpy(char *dest, char *src)
-        
-        mov rsi, rax                    ; *dest will now be 2nd arg of _strcpy
-        pop rax
+
+        call _strlen                    ; get dest_len in rax
+
         add rdi, rax
-        pop rsi                         ; get *dest in 2nd arg of _strcpy
         call _strcpy
-        
+
+        pop rax                         ; get back *dest in ret
         pop rbp
         ret
