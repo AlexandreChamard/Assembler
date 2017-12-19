@@ -12,6 +12,7 @@ _strcpy:
 	push rbp
 	mov rbp, rsp
 
+        push rdi                ; save *dest for the return
 	; Get len to cpy
         push rdi                ; save *dest
         push rsi                ; save *src
@@ -30,7 +31,7 @@ loop_cpy:
 	mov byte [rdi], 0	; Set '\0' at end of dest
 
 end_strcpy:
-	mov rax, rdi	        ; Return dest
+        pop rax                 ; return *dest
         pop rbp
 	ret
 
@@ -45,6 +46,8 @@ _strncpy:
         push rbp
         mov rbp, rsp
 
+        push rdi                ; save *dest for return
+
 	mov rcx, rdx 
 
 loop_ncpy:
@@ -56,6 +59,6 @@ loop_ncpy:
 	mov byte [rdi], 0	; Set '\0' at end of dest
 
 end_strncpy:
-	mov rax, rdi	        ; Return dest
+        pop rax                 ; return *dest
         pop rbp
 	ret
