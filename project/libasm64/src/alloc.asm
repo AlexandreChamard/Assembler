@@ -3,9 +3,9 @@ section .text
         global _malloc
 
 ; Type:
-;	void *
+; 	void *
 ; args:
-;	RDI = int size
+; 	RDI = int size
 _malloc:
         push rbp
         mov rbp, rsp
@@ -23,8 +23,8 @@ _malloc:
         syscall                         ; get new break in rax
 
         pop rdi                         ; get size back
+        sub rax, 16                     ;
         mov [rax], rdi                  ; have the size on the 16 first bits of new allocated memory
-        add rax, 16                     ; 
 
         pop rbp
         ret

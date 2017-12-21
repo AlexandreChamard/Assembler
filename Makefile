@@ -7,7 +7,7 @@ CSRC		=	main.c
 ASMSRC		=
 
 CSRCDIR		=	C
-ASMSRCDIR	=	project
+ASMSRCDIR	=	test
 
 OBJ		=	$(patsubst %,$(ODIR)/%,$(ASMSRC:.asm=.o)) \
 			$(patsubst %,$(ODIR)/%,$(CSRC:.c=.o))
