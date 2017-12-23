@@ -11,6 +11,7 @@ SRC		=	start.asm		\
 			is.asm			\
 			strcat.asm		\
 			alloc.asm		\
+			strdup.asm		\
 
 OBJ		=	$(patsubst %,$(ODIR)/%,$(SRC:.asm=.o))
 
