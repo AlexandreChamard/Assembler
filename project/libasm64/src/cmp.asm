@@ -10,19 +10,13 @@ section .text
 ;	RDI = const char *str1
 ;	RSI = const char *str2
 _strcmp:
-	push rbp
-	mov rbp, rsp
-
 	push rbx                        ; save rbx
-
         cmp rdi, 0                      ; if !ptr1
         je null_handling
         cmp rsi, 0                      ; if !ptr2
         je null_handling
-
 	xor rax, rax
 	xor rbx, rbx			; set registers to 0 used to calcul result
-
 loop_strcmp:
 	mov al, [rdi]
 	cmp al, [rsi]
@@ -32,14 +26,11 @@ loop_strcmp:
 	inc rdi
 	inc rsi
 	jmp loop_strcmp
-
 end_strcmp:
 	mov al, [rdi]
 	mov bl, [rsi]
 	sub rax, rbx			; RAX = *str1 - *str2
-
 	pop rbx
-	pop rbp
 	ret
 
 

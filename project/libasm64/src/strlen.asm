@@ -11,9 +11,10 @@ _strlen:
 	xor rax, rax
 	jmp while_strlen
 loop_strlen:
-	inc eax
+	inc rax
 while_strlen:
 	cmp byte [rdi + rax], 0
 	jne loop_strlen
 	leave
 	ret
+;openbsd

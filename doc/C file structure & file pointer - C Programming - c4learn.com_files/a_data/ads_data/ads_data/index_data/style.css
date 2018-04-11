@@ -1,0 +1,287 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0px;
+}
+#ad {
+    display: block;
+    border: #ff6600 1px solid;
+    width: 466px;
+    height: 58px;
+    -moz-user-select: -moz-none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: #000000;
+}
+.ad *:not(u):not(span):not(i):not(strong):not(b) {
+    position: absolute;
+    background-repeat: no-repeat;
+    -webkit-backface-visibility: hidden;
+    backface-visibility:         hidden;
+}
+#banner, #pub {
+    position: absolute;
+    display: block;
+    width: inherit;
+    height: inherit;
+    background-repeat: no-repeat;
+}
+#ad, #banner, #pub {
+    overflow: hidden;
+}
+.ad * {
+    transition: all ease-in-out .5s;
+    /* transition: none !important; */
+}
+.un, .deux, .trois, .quatre, .cinq, .six, .sept {
+ opacity: 0;
+    z-index: 1000;
+}
+.un {/* opacity: .3; */}
+.deux {/* opacity: .3; */}
+.trois {/* opacity: .3; */}
+.quatre {/* opacity: .3; */}
+.cinq {/*opacity: .3*/}
+.six {/*opacity: .3*/}
+.sept {/*opacity: .3*/}
+#timer {
+    transition-duration: .5s;
+}
+div#ic {
+    /* position: absolute; */
+    top: 0;
+    left: 0;
+    background: #000;
+    padding: 5px 5px 5px 5px;
+    color: #FFF;
+    opacity: .4;
+    margin-bottom: 10px;
+}
+@keyframes animcta {
+    0% {transform: translate3d(0,0,0);}
+    50% {transform: translate3d(3px,0,0);}
+    100% {transform: translate3d(0,0,0);}
+}
+.trnone * {transition: none !important;}
+.clear * {transition: none !important; display: none;}
+/*-------------------------*/
+
+
+.logo {
+    width: 48px;
+    height: 48px;
+    bottom: 5px;
+    /* left: 50%; */
+    /* transform: translate3d(-50%,0,0); */
+    /* opacity: 0; */
+    right: 5px;
+}
+
+.travailc {
+    width: 112px;
+    height: 112px;
+    overflow: hidden;
+    top: -4px;
+    left: 5px;
+    padding-top: 5px;
+    transform: translate3d(0,7px,0) scale(0.45);
+    transform-origin: top left;
+}
+
+.travailb {
+    transform: translate3d(0,100%,0);
+}
+
+.ta {
+    top: 12px;
+    left: 75px;
+    opacity: 0;
+    transform: translate3d(0,-33px,0);
+}
+
+.tbb {
+}
+.centre {
+    left: 50%;
+    transform: translate3d(-50%,0%,0);
+}
+
+.tab, .tbb {
+    margin-top: 1px;
+    transform: translate3d(0,-12px,0);
+    transition-delay: .2s;
+}
+
+.tb {
+    top: 13px;
+    opacity: 0;
+}
+
+
+.ctac {
+    width: 120px;
+    height: 30px;
+    border: 1px solid #FFF;
+    right: 64px;
+    transform: translate3d(0,-50%,0) scale(.8);
+    top: 50%;
+    opacity: 0;
+}
+
+.cta {
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%,-50%,0);
+    width: 84px;
+    height: 14px;
+}
+
+.boxc {
+    width: 180px;
+    /* height: 105px; */
+    top: -15px;
+    left: 270px;
+    transform: translate3d(0,0,0) scale(0.7);
+}
+
+div#ad {}
+
+.p {
+    width: 17px;
+    height: 17px;
+    background: #FFF;
+    border-radius: 100%;
+    top: 64px;
+    left: 45px;
+}
+
+.pb {
+    margin-left: 34px;
+}
+
+.pc {
+    margin-left: 68px;
+}
+@keyframes cli {
+    0%, 38%, 58%, 81%, 98% {opacity: 1; transition: none;}
+    30%, 50%, 73%, 90% {opacity: 0; transition: none;}
+}
+.p2 {
+    display: none;
+}
+
+.paa {
+    animation: cli step-end 2.4s infinite both;
+}
+
+.pab {
+    animation: cli step-end 1.8s infinite both -1s;
+}
+
+.pac {
+    animation: cli step-end 1.8s infinite both -1.5s;
+}
+
+.a2 .ta, .a2 .tab, .a4 .tb, .a4 .tbb {
+    transform: translate3d(0,0,0);
+    opacity: 1;
+    transition-timing-function: cubic-bezier(0.46, -0.03, 0.46, 1.26);
+}
+
+.a3 .travailc {
+    /* width: 211px; */
+    /* height: 211px; */
+    /* transform: translate3d(33px,0px,0); */
+    /* padding-top: 18px; */
+}
+
+.a2f .ta {
+    transform: translate3d(0,100px,0);
+    opacity: 0;
+}
+
+.a4 .travailb {
+    transform: translate3d(0,0,0);
+}
+
+.a4 .travail {
+    transform: translate3d(0,-260px,0);
+    transition-delay: 0.4s;
+    color: black;
+}
+
+.a4 .boxc {
+    transform: translate3d(-329px,36px,0) scale(0.25);
+    transition-duration: 1s;
+}
+
+.a5 travailc, .a5 .boxc {}
+
+.trb {
+    width: 100%;
+    height: 100%;
+}
+
+.a4 .trb {
+    transform: translate3d(0,-3px,0);
+    transform-origin: center top;
+    transition-delay: 0.2s;
+}
+
+.trb {}
+
+.a5 .p2 {
+    display: block;
+}
+
+.tb {
+    width: 100%;
+    left: 68px;
+}
+
+.tb {
+    transform: translate3d(0,-50px,0);
+    transition-delay: 0.6s;
+}
+
+.tbb {
+    transition-delay: 0.7s;
+    margin-top: 21px;
+    height: 17px;
+    margin-left: -2px;
+}
+
+.a4 .ctac {
+    opacity: 1;
+    transition-delay: 0.8s;
+    transform: translate3d(0%,-50%,0) scale(1);
+}
+
+.a5 .logo {
+    opacity: 1;
+}
+
+.a5 .trb, .a5 .tb {
+    /* margin-top: -148px; */
+    /* transition: all ease-in-out .5s; */
+}
+
+.a5 .trb {
+    /* margin-top: -170px; */
+}
+
+.taa {
+    height: 18px;
+    width: 107px;
+}
+
+.tab {
+    height: 18px;
+    width: 128px;
+    margin-top: 21px;
+}
+
+.tba {
+    height: 14px;
+    width: 93px;
+}

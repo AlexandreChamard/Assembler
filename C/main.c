@@ -1,19 +1,30 @@
+// #include "include/libasm.h"
+
+// #include <unistd.h>
+// #include <stdlib.h>
+// #include <stdio.h>
+// #include <fcntl.h>
 #include "include/libasm.h"
 
-// #include <stdlib.h>
+void * my_malloc(int);
+
+// typedef struct
+// {
+//  short level ;
+//  short token ;
+//  short bsize ;
+//  char fd ;
+//  unsigned flags ;
+//  unsigned char hold ;
+//  unsigned char *buffer ;
+//  unsigned char * curp ;
+//  unsigned istemp;
+// }FILE ;
 
 int main(int ac, char **av)
 {
-    int *i = _malloc(sizeof(int));
-
-    *i = 0;
-    // *(i + 1) = 1;
-    // *(i - 1) = 2;
-    // for (int i = 0; i < 10; i++) {
-    // char *ptr = _malloc(_strlen(av[1]) + 1);
-    // _strcpy(ptr, av[1]);
-    // _puts(ptr);
-    // _puts(av[1]);
-    // }
-    return (0);
+	if (ac != 1) {
+		_putnbr(_strlen(av[1]));
+	}
+	return (0);
 }
